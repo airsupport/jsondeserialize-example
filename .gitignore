@@ -32,3 +32,5 @@ build
 
 *.project
 *.classpath
+
+**.settings/
