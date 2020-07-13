@@ -3,8 +3,6 @@ package jsondeserialize.example.objects;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
-import jsondeserialize.example.builders.Foo_Builder;
-
 @JsonDeserialize(builder = Foo.Builder.class)
 public interface Foo {
 
