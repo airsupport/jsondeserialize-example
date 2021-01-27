@@ -17,16 +17,23 @@ public class App {
 		Foo.Builder fooBuilder = new Foo.Builder();
 		Foo foo = fooBuilder.foosDouble(3.4).foosInt(11).foosString("aString").build();
 
-		//Works fine
+		// Works fine
 		try {
 			printJson(foo);
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
 		}
-		
-		//Does not work
+
+		// Does not work
 		try {
 			printCsv(foo);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+
+		// Also does not work
+		try {
+			printCsv2(foo);
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
 		}
@@ -35,6 +42,16 @@ public class App {
 	private static void printCsv(Foo foo) throws JsonProcessingException {
 
 		CsvMapper mapper = new CsvMapper();
+		CsvSchema schema = mapper.schemaFor(Foo.class).withHeader();
+		ObjectWriter writer = mapper.writer(schema);
+
+		String csvData = writer.writeValueAsString(foo);
+		System.out.println(csvData);
+	}
+
+	private static void printCsv2(Foo foo) throws JsonProcessingException {
+
+		MyCsvMapper mapper = new MyCsvMapper();
 		CsvSchema schema = mapper.schemaFor(Foo.class).withHeader();
 		ObjectWriter writer = mapper.writer(schema);
 
